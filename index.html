@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>    
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
+
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css" type="text/css">
+</head>
+<style>
+    #map{
+        height: 100vh;
+        width: 100vw;
+    }
+    body{
+        margin:0px;
+    }#navbar{
+        display: flex;
+        height: 50px;
+        background-color: yellow;
+        border: 1px solid transparent;
+    }#name{
+        margin-left: 50px;
+        padding-top:10px;
+        font-size: 25px;
+        color: rgb(90, 81, 81);
+        border: 1px solid transparent;
+    }
+    /* #map::-webkit-scrollbar{
+        scroll-behavior: smooth;
+    } */
+</style>
+<body>
+    <div>
+        <div id="navbar">
+            <div id="name">Suraj Maps</div>
+        </div>
+        <div id="map"></div>
+    </div>
+    
+</body>
+
+  <script>
+     
+     mapboxgl.accessToken=`pk.eyJ1Ijoic3VyYWptaWNreSIsImEiOiJja3liaGgwZmkwZmw0MnZwOHZhYXVtdHVvIn0.VShVVdaXRxVcr3odg7Sijg`;
+
+     navigator.geolocation.getCurrentPosition(findLocation,errorLocation,{
+         enableHighAccuracy:true
+     })
+    
+ 
+
+
+function findLocation(position){
+    setupmap([position.coords.longitude,position.coords.latitude])
+}
+function errorLocation(){
+   setupmap([-3.43,53.33])
+}
+
+function setupmap(center){
+   const  map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/streets-v11',
+  center:center,
+  zoom:13
+});
+map.addControl(new mapboxgl.NavigationControl());
+
+    map.addControl(
+new MapboxDirections({accessToken: mapboxgl.accessToken}),'top-left')
+}
+
+
+
+  </script>
+</html>
